@@ -15,7 +15,6 @@ terraform {
 */
 }
 
-/*
 # Pull data from the transit hub deployment tfstate file
 data "terraform_remote_state" "transit" {
   backend = "azurerm"
@@ -26,7 +25,6 @@ data "terraform_remote_state" "transit" {
     key                  = "<storage account key>"
   }
 }
-*/
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
@@ -42,7 +40,7 @@ module "spoke-network" {
   hubvnetid      = data.transit.hubvnetid
   obewlbid       = data.transit.obewlbid
   environment    = var.environment
-  workload       = each.value["workloadname"]
+  workloadname   = each.value["workloadname"]
   spokeVnetRange = each.value["spokeVnetRange"]
   spokeSubName   = each.value["spokeSubName"]
   spokeSubRange  = each.value["spokeSubRange"]
