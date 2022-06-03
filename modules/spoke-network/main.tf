@@ -18,12 +18,25 @@ resource "azurerm_virtual_network" "spoke" {
   }
 }
 
+# Create a default NSG within the spoke
+resource "azurerm_network_security_group" "nsg" {
+  location            = azurerm_resource_group.spoke.location
+  name                = "nsg-${var.environment}-${var.location}-${var.workload}"
+  resource_group_name = azurerm_resource_group.spoke.name
+}
+
 # Create a subnet within the spoke virtual network
 resource "azurerm_subnet" "subnet" {
   name                 = var.spokeSubName
   resource_group_name  = azurerm_virtual_network.spoke.resource_group_name
   virtual_network_name = azurerm_virtual_network.spoke.name
   address_prefixes     = var.spokeSubRange
+}
+
+# Associate the NSG to the newly created subnet
+resource "azurerm_subnet_network_security_group_association" "name" {
+  network_security_group_id = azurerm_network_security_group.nsg.id
+  subnet_id                 = azurerm_subnet.subnet.id
 }
 
 #Peer the spoke Vnet to the Hub Vnet
