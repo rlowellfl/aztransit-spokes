@@ -1,16 +1,16 @@
 # Create Resource Group for the spoke virtual network
 resource "azurerm_resource_group" "spoke" {
-  name     = "rg-${var.environment}-${var.location}-${var.workload}"
+  name     = "rg-${var.environment}-${var.location}-${var.workloadname}"
   location = var.location
   tags     = var.required_tags
 }
 
 # Create the spoke virtual network
 resource "azurerm_virtual_network" "spoke" {
-  name                = "vnet-${var.environment}-${var.location}-spoke-${var.workload}"
+  name                = "vnet-${var.environment}-${var.location}-spoke-${var.workloadname}"
   address_space       = var.spokeVnetRange
   location            = var.location
-  resource_group_name = var.rgname
+  resource_group_name = azurerm_resource_group.spoke.name
   lifecycle {
     ignore_changes = [
       tags,
@@ -21,7 +21,7 @@ resource "azurerm_virtual_network" "spoke" {
 # Create a default NSG within the spoke
 resource "azurerm_network_security_group" "nsg" {
   location            = azurerm_resource_group.spoke.location
-  name                = "nsg-${var.environment}-${var.location}-${var.workload}"
+  name                = "nsg-${var.environment}-${var.location}-${var.workloadname}"
   resource_group_name = azurerm_resource_group.spoke.name
 }
 
@@ -41,7 +41,7 @@ resource "azurerm_subnet_network_security_group_association" "name" {
 
 #Peer the spoke Vnet to the Hub Vnet
 resource "azurerm_virtual_network_peering" "spoketohub" {
-  name                         = "${var.workload}_to_${var.var.hubvnetname}"
+  name                         = "${var.workload}_to_${var.hubvnetname}"
   resource_group_name          = azurerm_resource_group.spoke.name
   virtual_network_name         = azurerm_virtual_network.spoke.name
   remote_virtual_network_id    = var.hubvnetid
