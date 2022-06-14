@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.1.0"
+      version = "~>3.10.0"
     }
   }
   /*  backend "azurerm" {
@@ -36,10 +36,11 @@ module "spoke-network" {
   for_each       = var.spoke_network
   source         = "./modules/spoke-network"
   location       = var.location
-  hubvnetname    = data.transit.hubvnetname
-  hubvnetid      = data.transit.hubvnetid
-  obewlbid       = data.transit.obewlbid
+  hubvnetname    = data.terraform_remote_state.transit.outputs.hubvnetname
+  hubvnetid      = data.terraform_remote_state.transit.outputs.hubvnetid
+  obewlbip       = data.terraform_remote_state.transit.outputs.obewlbip
   environment    = var.environment
+  required_tags  = var.required_tags
   workloadname   = each.value["workloadname"]
   spokeVnetRange = each.value["spokeVnetRange"]
   spokeSubName   = each.value["spokeSubName"]

@@ -28,6 +28,10 @@ variable "hubvnetname" {
 variable "hubvnetid" {
   type = string
 }
-variable "obewlbid" {
+variable "obewlbip" {
   type = string
+}
+
+variable "required_tags" {
+  type = map(string)
 }

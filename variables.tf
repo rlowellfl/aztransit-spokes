@@ -22,7 +22,7 @@ variable "hubvnetname" {
 variable "hubvnetid" {
   type = string
 }
-variable "obewlbid" {
+variable "obewlbip" {
   type = string
 }
 

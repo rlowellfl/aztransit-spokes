@@ -41,7 +41,7 @@ resource "azurerm_subnet_network_security_group_association" "name" {
 
 #Peer the spoke Vnet to the Hub Vnet
 resource "azurerm_virtual_network_peering" "spoketohub" {
-  name                         = "${var.workload}_to_${var.hubvnetname}"
+  name                         = "${var.workloadname}_to_${var.hubvnetname}"
   resource_group_name          = azurerm_resource_group.spoke.name
   virtual_network_name         = azurerm_virtual_network.spoke.name
   remote_virtual_network_id    = var.hubvnetid
@@ -52,7 +52,7 @@ resource "azurerm_virtual_network_peering" "spoketohub" {
 
 #Peer the hub Vnet to the Spoke Vnet
 resource "azurerm_virtual_network_peering" "spokefromhub" {
-  name                         = "${var.workload}_from_${var.hubvnetname}"
+  name                         = "${var.workloadname}_from_${var.hubvnetname}"
   resource_group_name          = azurerm_resource_group.spoke.name
   virtual_network_name         = var.hubvnetname
   remote_virtual_network_id    = azurerm_virtual_network.spoke.id
@@ -63,7 +63,7 @@ resource "azurerm_virtual_network_peering" "spokefromhub" {
 
 #Create a route table for the Spoke VNet
 resource "azurerm_route_table" "routeTable" {
-  name                          = "rt-${var.environment}-${var.location}-spoke-${var.workload}"
+  name                          = "rt-${var.environment}-${var.location}-spoke-${var.workloadname}"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.spoke.name
   disable_bgp_route_propagation = true
@@ -81,7 +81,7 @@ resource "azurerm_route" "toFirewall" {
   route_table_name       = azurerm_route_table.routeTable.name
   address_prefix         = "0.0.0.0/0"
   next_hop_type          = "VirtualAppliance"
-  next_hop_in_ip_address = var.obewlbid
+  next_hop_in_ip_address = var.obewlbip
 }
 
 #Associate the new route table to the spoke network
