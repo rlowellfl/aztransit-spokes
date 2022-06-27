@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+    }
+  }
+}
+
 # Create Resource Group for the spoke virtual network
 resource "azurerm_resource_group" "spoke" {
   name     = "rg-${var.environment}-${var.location}-${var.workloadname}"
