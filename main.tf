@@ -7,7 +7,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~>3.10.0"
+      version = "~>3.11.0"
     }
   }
 
@@ -23,8 +23,8 @@ terraform {
 data "terraform_remote_state" "transit" {
   backend = "azurerm"
   config = {
-    resource_group_name  = "Non-TF"
-    storage_account_name = "architechstfstatefiles"
+    resource_group_name  = "<resource group for terraform state file storage>"
+    storage_account_name = "<storage account for terraform state file storage>"
     container_name       = "<transit hub network state file container>"
     key                  = "<storage account key>"
   }
