@@ -16,15 +16,15 @@ variable "required_tags" {
 }
 
 # Hub network variables
-variable "hubvnetname" {
-  type = string
-}
-variable "hubvnetid" {
-  type = string
-}
-variable "obewlbip" {
-  type = string
-}
+# variable "hubvnetname" {
+#   type = string
+# }
+# variable "hubvnetid" {
+#   type = string
+# }
+# variable "obewlbip" {
+#   type = string
+# }
 
 # Spoke network variables
 variable "spoke_network" {

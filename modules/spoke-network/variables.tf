@@ -33,5 +33,5 @@ variable "obewlbip" {
 }
 
 variable "required_tags" {
-  type = map(string)
+  type = map(any)
 }

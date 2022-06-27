@@ -1,7 +1,3 @@
-output "spokeVNetID" {
-  value = azurerm_virtual_network.spoke.id
-}
-
 output "spokeNetworkName" {
   value = azurerm_virtual_network.spoke.name
 }
@@ -12,4 +8,8 @@ output "spokeSubnetName" {
 
 output "spokeSubnetRange" {
   value = var.spokeSubRange
+}
+
+output "spokeNetworkID" {
+  value = azurerm_virtual_network.spoke.id
 }

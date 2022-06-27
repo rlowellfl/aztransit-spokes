@@ -50,17 +50,6 @@ resource "azurerm_virtual_network_peering" "spoketohub" {
   use_remote_gateways          = false
 }
 
-#Peer the hub Vnet to the Spoke Vnet
-resource "azurerm_virtual_network_peering" "spokefromhub" {
-  name                         = "${var.workloadname}_from_${var.hubvnetname}"
-  resource_group_name          = azurerm_resource_group.spoke.name
-  virtual_network_name         = var.hubvnetname
-  remote_virtual_network_id    = azurerm_virtual_network.spoke.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-  allow_gateway_transit        = false
-}
-
 #Create a route table for the Spoke VNet
 resource "azurerm_route_table" "routeTable" {
   name                          = "rt-${var.environment}-${var.location}-spoke-${var.workloadname}"
