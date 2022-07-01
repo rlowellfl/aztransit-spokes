@@ -14,7 +14,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "<resource group for terraform state file storage>"
     storage_account_name = "<storage account for terraform state file storage>"
-    container_name       = "<spoke network state file container>"
+    container_name       = "terraform-aztransit-spokes"
     key                  = "<storage account key>"
   }
 }
@@ -25,7 +25,7 @@ data "terraform_remote_state" "transit" {
   config = {
     resource_group_name  = "<resource group for terraform state file storage>"
     storage_account_name = "<storage account for terraform state file storage>"
-    container_name       = "<transit hub network state file container>"
+    container_name       = "terraform-aztransit-nva"
     key                  = "<storage account key>"
   }
 }
